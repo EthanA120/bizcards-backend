@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bizcards API - ברוכים הבאים</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 50px 60px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+        }
+        .logo {
+            font-size: 50px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        h1 {
+            font-size: 32px;
+            margin: 0 0 20px 0;
+            color: #2c3e50;
+        }
+        p {
+            font-size: 18px;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .features {
+            text-align: right;
+            background-color: #f8f9fa;
+            padding: 20px 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #e9ecef;
+        }
+        .features h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        .features ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .features li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-right: 30px;
+            color: #555;
+        }
+        .features li::before {
+            content: "✓";
+            position: absolute;
+            right: 0;
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .status {
+            display: inline-block;
+            background-color: #e8f8f5;
+            color: #1abc9c;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: bold;
+            border: 1px solid #a3e4d7;
+            box-shadow: 0 2px 5px rgba(26, 188, 156, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📇</div>
+        <h1>ברוכים הבאים לשרת של Bizcards</h1>
+        <p>זהו שרת ה-Backend של אפליקציית כרטיסי העסק. השרת פעיל ומוכן לקבל בקשות API.</p>
+        
+        <div class="features">
+            <h3>יכולות המערכת</h3>
+            <ul>
+                <li>ניהול משתמשים (הרשמה, התחברות ואימות טוקנים)</li>
+                <li>יצירה, קריאה, עדכון ומחיקה של כרטיסי ביקור</li>
+                <li>מערכת הרשאות מבוססת תפקידים (לקוח, מנהל, עסקי)</li>
+                <li>אבטחת מידע מתקדמת ושמירת נתונים בטוחה</li>
+            </ul>
+        </div>
+
+        <div class="status">
+            🟢 השרת מחובר ופועל בהצלחה
+        </div>
+    </div>
+</body>
+</html>
