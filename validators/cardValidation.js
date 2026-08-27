@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { User } from "../models/userModel";
 
 const israeliPhoneRegex = /^(?:(?:\+|972)?[\s-]?)(?:0?([23489]|5[0-8]|7[1-9]))[\s-]?(\d{3})[\s-]?(\d{4})$/;
 
@@ -24,5 +25,8 @@ export const cardValidation = Joi.object({
   email: Joi.string().email().required(),
   web: Joi.string().uri().required(),
   image: image.required(),
-  address: address.required()
+  address: address.required(),
+  bizNumber: Joi.Number.required(),
+  likes: Joi.array().items(Joi.string()).required(),
+  user_id: Joi.string.requierd() // Creator
 });

@@ -61,14 +61,3 @@ export const isOwnerOrAdmin = (req, res, next) => {
 
   next();
 };
-
-/**
- * Middleware to check if the user is a Business account or Admin
- */
-export const isBusinessOrAdmin = (req, res, next) => {
-  if (!req.user?.isBusiness && !req.user?.isAdmin) {
-    return res.status(403).send("Access denied. Business account or Admin required.");
-  }
-
-  next();
-};

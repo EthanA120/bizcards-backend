@@ -21,7 +21,7 @@ router.get("/:id", auth, isOwnerOrAdmin, getUser);
 // 5. PUT /users/:id Restricted to Owner
 router.put("/:id", auth, isOwner, editUser);
 
-// 6. PUT /users/:id Restricted to Owner
+// 6. PATCH /users/:id Restricted to Owner
 router.patch("/:id", auth, isOwner, editIsBusiness);
 
 // 6. DELETE /users/:id Restricted to Admin or Owner

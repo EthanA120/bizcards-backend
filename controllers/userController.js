@@ -47,7 +47,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// 3. Get All Users (Admin only / Protected route)
+// 3. Get all Users (Admin only / Protected route)
 export const getUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password");
