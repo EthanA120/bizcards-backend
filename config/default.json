@@ -1,5 +1,6 @@
 {
   "mongodb": {
-    "url": "mongodb://127.0.0.1:27017/RestAPIProject"
-  }
+    "url": "mongodb://127.0.0.1:27017/BizCards"
+  },
+  "jwtSecret": "5YRcotw5B9AaxUTZpbULx3eJugLkhjvfxTPJRuNj6Zr"
 }

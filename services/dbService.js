@@ -7,7 +7,7 @@ dotenv.config();
 
 // Define the MongoDB connection URI, prioritizing the environment variable over the local configuration
 const LOCAL_URI = config.get("mongodb.url");
-const mongodbURL = LOCAL_URI || process.env.MONGODB_URI;
+const mongodbURL = process.env.MONGODB_URI || LOCAL_URI;
 
 const connectDB = async () => {
   try {

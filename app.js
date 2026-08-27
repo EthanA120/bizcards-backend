@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 // import routes from './routes/index.js';
 import logger from './middlewares/logger.js';
 import connectDB from './services/dbService.js';
+import usersRouter from "./routes/usersRouter.js";
 
 dotenv.config();
 
@@ -28,12 +29,14 @@ app.use(express.static('public'));
 app.use(logger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(routes);
 
 
 app.get('/', (req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
+
+// Register the user routes
+app.use("/users", usersRouter);
 
 // Must be the last middleware
 app.use((req,res) => {
