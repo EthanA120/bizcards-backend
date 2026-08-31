@@ -47,7 +47,7 @@ export const loginValidation = Joi.object({
 });
 
 
-export const editUserValidation = Joi.object({
+export const userEditValidation = Joi.object({
   name: name.required(),
   phone: Joi.string().ruleset.regex(israeliPhoneRegex).rule({ message: phoneMessage }).required(),
   email: Joi.string().email().required(),
