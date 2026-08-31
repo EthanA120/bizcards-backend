@@ -6,12 +6,12 @@ const nameSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   middleName: { type: String },
   lastName: { type: String, required: true }
-}, { _id: false }); // _id: false prevents Mongoose from creating an _id field for the name subdocument
+});
 
 const imageSchema = new mongoose.Schema({
   url: { type: String },
   altText: { type: String }
-}, { _id: false });
+});
 
 const addressSchema = new mongoose.Schema({
   state: { type: String, required: true },
@@ -20,7 +20,7 @@ const addressSchema = new mongoose.Schema({
   street: { type: String, required: true },
   houseNumber: { type: Number, required: true },
   zipCode: { type: Number, required: true },
-}, { _id: false });
+});
 
 
 const userSchema = new mongoose.Schema({

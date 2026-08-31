@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import logger from './middlewares/logger.js';
 import connectDB from './services/dbService.js';
 import usersRouter from "./routes/usersRouter.js";
+import cardsRouter from "./routes/cardsRouter.js"
 
 dotenv.config();
 
@@ -35,8 +36,9 @@ app.get('/', (req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
 
-// Register the user routes
+// Register the routes
 app.use("/users", usersRouter);
+app.use("/cards", cardsRouter);
 
 // Must be the last middleware
 app.use((req,res) => {

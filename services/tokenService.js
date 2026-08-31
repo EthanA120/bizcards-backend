@@ -6,6 +6,7 @@ dotenv.config();
 
 // Fetch secret key from environment variable (dotenv) or fallback to config
 const JWT_SECRET = process.env.JWT_SECRET || config.get("jwtSecret");
+const TOKEN_EXPIRES_IN = process.env.TOKEN_EXPIRES_IN || config.get("tokenExpiresIn");
 
 /**
  * Generates a JWT authentication token containing user payload
@@ -19,7 +20,7 @@ export const generateAuthToken = (user) => {
     isAdmin: user.isAdmin,
   };
 
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: "4h" });
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: TOKEN_EXPIRES_IN });
 };
 
 /**

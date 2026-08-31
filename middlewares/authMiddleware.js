@@ -1,4 +1,5 @@
 import { verifyToken } from "../services/tokenService.js";
+import { Card } from "../models/cardModel.js";
 
 /**
  * Middleware to check if the user is authenticated
@@ -29,12 +30,20 @@ export const isAdmin = (req, res, next) => {
 /**
  * Middleware to check if the user is the owner
  */
-export const isOwner = (req, res, next) => {
-  if (req.user?._id?.toString() !== req.params.id) {
+export const isOwner = async (req, res, next) => {
+  const UserId = req.user?._id?.toString();
+  const resourceId = req.params.id;
+
+  // Check if it's a Card and the User is the owner of it
+  const cardUserId = await Card.findById(resourceId).select("user_id").lean();
+  const cardOwnerId = cardUserId ? cardUserId.user_id.toString() : null;
+
+  // Check if the user is the owner of the resource
+  if (UserId === resourceId || UserId === cardOwnerId) {
+    next();
+  } else {
     return res.status(403).send("Access denied. This action is only available to its owner.");
   }
-
-  next();
 };
 
 /**
@@ -57,17 +66,6 @@ export const isOwnerOrAdmin = (req, res, next) => {
 
   if (!isAdmin && !isOwner) {
     return res.status(403).send("Access denied. Admin or owner privileges required.");
-  }
-
-  next();
-};
-
-/**
- * Middleware to check if the user is a Business account or Admin
- */
-export const isBusinessOrAdmin = (req, res, next) => {
-  if (!req.user?.isBusiness && !req.user?.isAdmin) {
-    return res.status(403).send("Access denied. Business account or Admin required.");
   }
 
   next();

@@ -1,6 +1,6 @@
 import { User } from "../models/userModel.js";
 import {
-  registerValidation, loginValidation, editUserValidation, IsBusinessValidation
+  registerValidation, loginValidation, userEditValidation, IsBusinessValidation
 } from "../validators/userValidation.js";
 import { getJoiErrorMessage } from "../services/joiService.js";
 import { generateHash, compareHash } from "../services/bcryptService.js";
@@ -47,7 +47,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// 3. Get All Users (Admin only / Protected route)
+// 3. Get all Users (Admin only / Protected route)
 export const getUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password");
@@ -79,7 +79,7 @@ export const editUser = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const error = getJoiErrorMessage(editUserValidation.validate(req.body));
+    const error = getJoiErrorMessage(userEditValidation.validate(req.body));
     if (error) return res.status(400).send(error);
 
     const updateData = { ...req.body };
