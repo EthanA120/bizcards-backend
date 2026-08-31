@@ -1,4 +1,6 @@
 /node_modules
 /package-lock.json
 /profiles
-.env
+/logs
+/.env
+/BackendProjectModule.pdf

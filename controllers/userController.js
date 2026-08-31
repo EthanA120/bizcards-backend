@@ -28,24 +28,53 @@ export const registerUser = async (req, res) => {
   }
 };
 
-// 2. Login User
+
+// 2. Login User (With Bonus 4: Block after 3 failed attempts for 24 hours)
 export const loginUser = async (req, res) => {
   try {
+    // Validate request body with Joi
     const error = getJoiErrorMessage(loginValidation.validate(req.body));
     if (error) return res.status(400).send(error);
 
+    // Find user by email
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(400).send("Invalid email or password.");
 
-    const validPassword = await compareHash(req.body.password, user.password);
-    if (!validPassword) return res.status(400).send("Invalid email or password.");
+    // Check if user is currently blocked
+    if (user.blockUntil && user.blockUntil > new Date()) {
+      return res.status(403).send("Account is blocked. Try again later after 24 hours.");
+    }
 
+    // Validate password
+    const validPassword = await compareHash(req.body.password, user.password);
+
+    if (!validPassword) {
+      // Increment failed login attempts
+      user.loginAttempts += 1;
+
+      // If failed 3 times, block user for 24 hours
+      if (user.loginAttempts >= 3) {
+        user.blockUntil = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours in milliseconds
+      }
+
+      await user.save();
+      return res.status(400).send("Invalid email or password.");
+    }
+
+    // Reset login attempts and unblock on successful login
+    user.loginAttempts = 0;
+    user.blockUntil = null;
+    await user.save();
+
+    // Generate token and return response
     const token = generateAuthToken(user);
     res.status(200).send({ token });
+
   } catch (err) {
     res.status(500).send("Server error: " + err.message);
   }
 };
+
 
 // 3. Get all Users (Admin only / Protected route)
 export const getUsers = async (req, res) => {

@@ -5,6 +5,11 @@ export default function handleServerError(res, err) {
     return res.status(400).send(`The ${key} provided already exists.`);
   }
 
+  // Mongoose invalid ObjectId error (e.g., invalid ID format in URL)
+  if (err.name === "CastError") {
+    return res.status(400).send(`Invalid format for field: ${err.path}`);
+  }
+
   // General fallback for all other errors
   return res.status(500).send("Server error: " + err.message);
 };

@@ -32,6 +32,11 @@ const userSchema = new mongoose.Schema({
   address: { type: addressSchema, required: true },
   isBusiness: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },
+
+  // Bonus 4: Block user after failed login attempts
+  loginAttempts: { type: Number, default: 0 },
+  blockUntil: { type: Date, default: null },
+
   createdAt: { type: Date, default: Date.now },
 });
 

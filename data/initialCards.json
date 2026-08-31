@@ -1,0 +1,64 @@
+[
+  {
+    "title": "ProPhoto Studios",
+    "subtitle": "Professional Event & Portrait Photography",
+    "description": "High quality photography services for weddings, corporate events, and personal portraits with over 10 years of experience.",
+    "phone": "0501234567",
+    "email": "info@prophoto.co.il",
+    "web": "https://www.prophoto.co.il",
+    "image": {
+      "url": "https://cdn.pixabay.com/photo/2016/04/20/08/21/entrepreneur-1340649_960_720.jpg",
+      "alt": "Camera on a tripod in a photography studio"
+    },
+    "address": {
+      "state": "",
+      "country": "Israel",
+      "city": "Tel Aviv",
+      "street": "Dizengoff",
+      "houseNumber": 102,
+      "zip": 6439602
+    }
+  },
+
+  {
+    "title": "Artisan Bakery & Cafe",
+    "subtitle": "Fresh Sourdough Bread & Specialty Coffee",
+    "description": "Handcrafted sourdough pastries, organic coffee beans, and delicious breakfast options served daily in a cozy atmosphere.",
+    "phone": "0529876543",
+    "email": "contact@artisanbakery.com",
+    "web": "https://www.artisanbakery.com",
+    "image": {
+      "url": "https://cdn.pixabay.com/photo/2017/05/07/08/56/pancakes-2291908_960_720.jpg",
+      "alt": "Freshly baked pastries and coffee"
+    },
+    "address": {
+      "state": "",
+      "country": "Israel",
+      "city": "Haifa",
+      "street": "Herzl",
+      "houseNumber": 15,
+      "zip": 3303102
+    }
+  },
+
+  {
+    "title": "TechPulse Solutions",
+    "subtitle": "Full-Stack Web & Mobile App Development",
+    "description": "Custom software development, cloud infrastructure setup, and API integrations for startups and enterprise clients.",
+    "phone": "0543219876",
+    "email": "hello@techpulse.io",
+    "web": "https://www.techpulse.io",
+    "image": {
+      "url": "https://cdn.pixabay.com/photo/2015/01/08/18/25/desk-593327_960_720.jpg",
+      "alt": "Modern tech office setup with laptop"
+    },
+    "address": {
+      "state": "",
+      "country": "Israel",
+      "city": "Jerusalem",
+      "street": "Jaffa",
+      "houseNumber": 40,
+      "zip": 9100000
+    }
+  }
+]

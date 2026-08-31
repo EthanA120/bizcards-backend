@@ -1,0 +1,74 @@
+[
+  {
+    "name": {
+      "firstName": "Admin",
+      "middleName": "System",
+      "lastName": "Manager"
+    },
+    "phone": "0509998877",
+    "email": "admin.manager@example.com",
+    "password": "AdminPassword123!",
+    "image": {
+      "url": "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png",
+      "altText": "Admin Avatar"
+    },
+    "address": {
+      "state": "Israel",
+      "country": "Israel",
+      "city": "Tel Aviv",
+      "street": "Rothschild",
+      "houseNumber": 10,
+      "zipCode": 6688101
+    },
+    "isBusiness": true,
+    "isAdmin": true
+  },
+
+  {
+    "name": {
+      "firstName": "David",
+      "middleName": "",
+      "lastName": "Cohen"
+    },
+    "phone": "0521234567",
+    "email": "david.cohen@example.com",
+    "password": "BusinessUser123!",
+    "image": {
+      "url": "https://cdn.pixabay.com/photo/2014/04/02/14/10/female-306407_1280.png",
+      "altText": "Business Avatar"
+    },
+    "address": {
+      "state": "Israel",
+      "country": "Israel",
+      "city": "Haifa",
+      "street": "Jaffa",
+      "houseNumber": 45,
+      "zipCode": 3303105
+    },
+    "isBusiness": true
+  },
+
+  {
+    "name": {
+      "firstName": "Noa",
+      "middleName": "Rachel",
+      "lastName": "Levi"
+    },
+    "phone": "0547654321",
+    "email": "noa.levi@example.com",
+    "password": "StandardUser123!",
+    "image": {
+      "url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+      "altText": "Standard User Avatar"
+    },
+    "address": {
+      "state": "Israel",
+      "country": "Israel",
+      "city": "Jerusalem",
+      "street": "Jaffa",
+      "houseNumber": 12,
+      "zipCode": 9100000
+    },
+    "isBusiness": false
+  }
+]
