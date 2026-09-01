@@ -1,20 +1,20 @@
 import Joi from "joi";
 
 const israeliPhoneRegex = /^(?:(?:\+|972)?[\s-]?)(?:0?([23489]|5[0-8]|7[1-9]))[\s-]?(\d{3})[\s-]?(\d{4})$/;
-const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{9,}$/;
+const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{7,}$/;
 
 const phoneMessage = 'user "phone" must be a valid Israeli phone number';
 const passwordMessage = 'Password must be at least 9 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character';
 
 const name = Joi.object({
-  firstName: Joi.string().min(2).max(256).required(),
-  middleName: Joi.string().max(256).allow("").optional(),
-  lastName: Joi.string().min(2).max(256).required(),
+  first: Joi.string().min(2).max(256).required(),
+  middle: Joi.string().max(256).allow("").optional(),
+  last: Joi.string().min(2).max(256).required(),
 });
 
 const image = Joi.object({
   url: Joi.string().uri().allow("").optional(),
-  altText: Joi.string().max(256).allow("").optional()
+  alt: Joi.string().max(256).allow("").optional()
 });
 
 const address = Joi.object({
@@ -23,7 +23,7 @@ const address = Joi.object({
   city: Joi.string().required(),
   street: Joi.string().required(),
   houseNumber: Joi.number().min(1).required(),
-  zipCode: Joi.number().optional()
+  zip: Joi.number().optional()
 });
 
 

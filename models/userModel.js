@@ -3,23 +3,29 @@ import mongoose from "mongoose";
 const israeliPhoneRegex = /^(?:(?:\+|972)?[\s-]?)(?:0?([23489]|5[0-8]|7[1-9]))[\s-]?(\d{3})[\s-]?(\d{4})$/;
 
 const nameSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  middleName: { type: String },
-  lastName: { type: String, required: true }
+  first: { type: String, required: true },
+  middle: { type: String },
+  last: { type: String, required: true }
 });
 
 const imageSchema = new mongoose.Schema({
-  url: { type: String },
-  altText: { type: String }
+  url: { 
+    type: String, 
+    default: "https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805_960_720.png" 
+  },
+  alt: { 
+    type: String, 
+    default: "user avatar" 
+  }
 });
 
 const addressSchema = new mongoose.Schema({
-  state: { type: String, required: true },
+  state: { type: String, default: "not defined" },
   country: { type: String, required: true },
   city: { type: String, required: true },
   street: { type: String, required: true },
   houseNumber: { type: Number, required: true },
-  zipCode: { type: Number, required: true },
+  zip: { type: Number, default: 0 },
 });
 
 
@@ -28,7 +34,7 @@ const userSchema = new mongoose.Schema({
   phone: { type: String, required: true, match: israeliPhoneRegex },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  image: { type: imageSchema, required: true },
+  image: { type: imageSchema, default: () => ({}) },
   address: { type: addressSchema, required: true },
   isBusiness: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },

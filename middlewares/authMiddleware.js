@@ -1,5 +1,32 @@
 import { verifyToken } from "../services/tokenService.js";
 import { Card } from "../models/cardModel.js";
+import handleServerError from "../utils/errorHandler.js"
+
+
+/**
+ * Checks the identity of the user against the requested resource
+ * @param {Object} user - The user object from the request
+ * @param {Object} params - The request parameters
+ * @returns {Object} - An object containing boolean values for isCardOwner, isOwnUser, and isAdmin
+ */
+const checkIdentity = async (req, res, err) => {
+  try {
+    const UserId = req.user?._id?.toString();
+    const resourceId = req.params.id;
+
+    // Check if it's a Card and the User is the owner of it
+    const cardUserId = await Card.findById(resourceId).select("user_id").lean();
+    const cardOwnerId = cardUserId ? cardUserId.user_id.toString() : null;
+
+    const isCardOwner = UserId === cardOwnerId;
+    const isOwnUser = UserId === resourceId;
+    const isAdmin = req.user.isAdmin;
+
+    return { isCardOwner, isOwnUser, isAdmin }
+  } catch (error) {
+    handleServerError(res, err);
+  }
+}
 
 /**
  * Middleware to check if the user is authenticated
@@ -27,24 +54,6 @@ export const isAdmin = (req, res, next) => {
   next();
 };
 
-/**
- * Middleware to check if the user is the owner
- */
-export const isOwner = async (req, res, next) => {
-  const UserId = req.user?._id?.toString();
-  const resourceId = req.params.id;
-
-  // Check if it's a Card and the User is the owner of it
-  const cardUserId = await Card.findById(resourceId).select("user_id").lean();
-  const cardOwnerId = cardUserId ? cardUserId.user_id.toString() : null;
-
-  // Check if the user is the owner of the resource
-  if (UserId === resourceId || UserId === cardOwnerId) {
-    next();
-  } else {
-    return res.status(403).send("Access denied. This action is only available to its owner.");
-  }
-};
 
 /**
  * Middleware to check if the user is the owner
@@ -57,16 +66,32 @@ export const isBusiness = (req, res, next) => {
   next();
 };
 
+
+/**
+ * Middleware to check if the user is the owner
+ */
+export const isOwner = async (req, res, next) => {
+  const { isOwnUser, isCardOwner, isAdmin } = await checkIdentity(req.user, req.params);
+
+  // Check if the user is the Owner of the resource (own or a card)
+  if (isOwnUser || isCardOwner) {
+    next();
+  } else {
+    return res.status(403).send("Access denied. This action is only available to its owner.");
+  }
+};
+
+
 /**
  * Middleware to check if the user is an Admin OR the Owner of the resource
  */
-export const isOwnerOrAdmin = (req, res, next) => {
-  const isAdmin = req.user?.isAdmin;
-  const isOwner = req.user?._id?.toString() === req.params.id;
+export const isOwnerOrAdmin = async (req, res, next) => {
+  const { isOwnUser, isCardOwner, isAdmin } = await checkIdentity(req.user, req.params);
 
-  if (!isAdmin && !isOwner) {
-    return res.status(403).send("Access denied. Admin or owner privileges required.");
+  // Check if the user is the Owner of the resource or Admin
+  if (isOwnUser || isCardOwner || isAdmin) {
+    next();
+  } else {
+    return res.status(403).send("Access denied. This action is only available to its owner.");
   }
-
-  next();
 };

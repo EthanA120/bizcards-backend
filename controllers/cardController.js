@@ -22,8 +22,9 @@ export const getMyCards = async (req, res) => {
     const user = req.user; // Get the authenticated user from the request
     const card = await Card.find({ user_id: user._id }); // Find cards that belong to the authenticated user
 
+    // If there are no cards send empty array
     if (!card || card.length === 0) {
-      return res.status(404).send("No cards have been found.");
+      return res.status(200).send([]);
     }
 
     res.status(200).send(card);
@@ -60,7 +61,6 @@ export const createCard = async (req, res) => {
     let randomBizNumber = 0;
     let existingCard = true;
     while (existingCard) {
-      console.log(`Generating random bizNumber: ${randomBizNumber}`);
       randomBizNumber = Math.floor(1000000 + Math.random() * 9000000); // 7 digits
       existingCard = await Card.findOne({ bizNumber: randomBizNumber });
     }
@@ -174,7 +174,6 @@ export const likeCard = async (req, res) => {
       card.likes.splice(userIndex, 1);
     }
 
-    // Save updated card to DB
     await card.save();
 
     res.status(200).send(card);

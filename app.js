@@ -10,6 +10,7 @@ import usersRouter from "./routes/usersRouter.js";
 import cardsRouter from "./routes/cardsRouter.js"
 import generateInitialData from './services/initialDataService.js';
 
+
 dotenv.config();
 
 connectDB();
@@ -26,11 +27,10 @@ app.use(cors({
   origin: true,
   credentials: true,
   methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-  allowedHeaders: 'Accept, Authorization',
+  allowedHeaders: 'Accept, Authorization, x-auth-token, Content-Type',
 }));
 
 app.use(express.static('public'));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 

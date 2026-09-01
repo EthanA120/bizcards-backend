@@ -5,6 +5,7 @@ import {
 import { getJoiErrorMessage } from "../services/joiService.js";
 import { generateHash, compareHash } from "../services/bcryptService.js";
 import { generateAuthToken } from "../services/tokenService.js";
+import handleServerError from '../utils/errorHandler.js'
 
 // 1. Register User
 export const registerUser = async (req, res) => {
@@ -24,7 +25,7 @@ export const registerUser = async (req, res) => {
 
     res.status(201).send(userResponse);
   } catch (err) {
-    res.status(500).send("Server error: " + err.message);
+    handleServerError(res, err);
   }
 };
 
@@ -71,7 +72,7 @@ export const loginUser = async (req, res) => {
     res.status(200).send({ token });
 
   } catch (err) {
-    res.status(500).send("Server error: " + err.message);
+    handleServerError(res, err);
   }
 };
 
@@ -82,7 +83,7 @@ export const getUsers = async (req, res) => {
     const users = await User.find().select("-password");
     res.status(200).send(users);
   } catch (err) {
-    res.status(500).send("Server error: " + err.message);
+    handleServerError(res, err);
   }
 };
 
@@ -91,7 +92,7 @@ export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id).select("-password");
-    
+
     // Check if user exists
     if (!user) {
       return res.status(404).send("User not found.");
@@ -99,7 +100,7 @@ export const getUser = async (req, res) => {
 
     res.status(200).send(user);
   } catch (err) {
-    res.status(500).send("Server error: " + err.message);
+    handleServerError(res, err);
   }
 };
 
@@ -131,7 +132,7 @@ export const editUser = async (req, res) => {
 
     res.status(200).send(updatedUser);
   } catch (err) {
-    res.status(500).send("Server error: " + err.message);
+    handleServerError(res, err);
   }
 };
 
@@ -155,7 +156,7 @@ export const editIsBusiness = async (req, res) => {
 
     res.status(200).send(updatedUser);
   } catch (err) {
-    res.status(500).send("Server error: " + err.message);
+    handleServerError(res, err);
   }
 };
 
@@ -164,16 +165,16 @@ export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedUser = await User.findByIdAndDelete(id);
-    
+
     if (!deletedUser) {
       return res.status(404).send("User not found.");
     }
-    
+
     const userResponse = deletedUser.toObject();
     delete userResponse.password;
 
     res.status(200).send(userResponse);
   } catch (err) {
-    res.status(500).send("Server error: " + err.message);
+    handleServerError(res, err);
   }
 };
