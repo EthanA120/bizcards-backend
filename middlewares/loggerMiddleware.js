@@ -15,9 +15,17 @@ morgan.token("colored-status", (req, res) => {
 
 // Export console logger middleware instance
 export const consoleLogger = morgan(
-  ":local-date :method :url :colored-status :response-time ms"
+  ":local-date :method :url :colored-status :response-time ms",
+  {
+    stream: {
+      write: (message) => {
+        // Fix Morgan's escaping by replacing the literal '\u001b' string back with the real ESC control character (\x1b)
+        const rawColorMessage = message.replace(/\\u001b/g, "\x1b");
+        process.stdout.write(rawColorMessage);
+      }
+    }
+  }
 );
-
 
 /**
  * Middleware for logging error responses to a file
@@ -42,7 +50,7 @@ export const fileLogger = (req, res, next) => {
       // Format timestamp for log entry
       const timestamp = now.toISOString().replace("T", ", ").substring(0, 20);
 
-      // Construct log message string
+      // Construct log message string (keeps file logs clean without ANSI symbols)
       const logMessage = `[${timestamp}] Status: ${res.statusCode} | Method: ${req.method} | URL: ${req.originalUrl} | Message: ${res.statusMessage || "Error"}\n`;
 
       // Log file path

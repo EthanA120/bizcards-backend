@@ -9,23 +9,19 @@ import handleServerError from "../utils/errorHandler.js"
  * @param {Object} params - The request parameters
  * @returns {Object} - An object containing boolean values for isCardOwner, isOwnUser, and isAdmin
  */
-const checkIdentity = async (req, res, err) => {
-  try {
-    const UserId = req.user?._id?.toString();
-    const resourceId = req.params.id;
+const checkIdentity = async (user, params) => {
+  const UserId = user?._id?.toString();
+  const resourceId = params.id;
 
-    // Check if it's a Card and the User is the owner of it
-    const cardUserId = await Card.findById(resourceId).select("user_id").lean();
-    const cardOwnerId = cardUserId ? cardUserId.user_id.toString() : null;
+  // Check if it's a Card and the User is the owner of it
+  const cardUserId = await Card.findById(resourceId).select("user_id").lean();
+  const cardOwnerId = cardUserId ? cardUserId.user_id.toString() : null;
 
-    const isCardOwner = UserId === cardOwnerId;
-    const isOwnUser = UserId === resourceId;
-    const isAdmin = req.user.isAdmin;
+  const isCardOwner = UserId === cardOwnerId;
+  const isOwnUser = UserId === resourceId;
+  const isAdmin = user.isAdmin;
 
-    return { isCardOwner, isOwnUser, isAdmin }
-  } catch (error) {
-    handleServerError(res, err);
-  }
+  return { isCardOwner, isOwnUser, isAdmin }
 }
 
 /**
@@ -86,12 +82,16 @@ export const isOwner = async (req, res, next) => {
  * Middleware to check if the user is an Admin OR the Owner of the resource
  */
 export const isOwnerOrAdmin = async (req, res, next) => {
-  const { isOwnUser, isCardOwner, isAdmin } = await checkIdentity(req.user, req.params);
+  try {
+    const { isOwnUser, isCardOwner, isAdmin } = await checkIdentity(req.user, req.params);
 
-  // Check if the user is the Owner of the resource or Admin
-  if (isOwnUser || isCardOwner || isAdmin) {
-    next();
-  } else {
-    return res.status(403).send("Access denied. This action is only available to its owner.");
+    // Check if the user is the Owner of the resource or Admin
+    if (isOwnUser || isCardOwner || isAdmin) {
+      next();
+    } else {
+      return res.status(403).send("Access denied. This action is only available to its owner or Admin.");
+    }
+  } catch (err) {
+    handleServerError(res, err);
   }
 };

@@ -1,6 +1,7 @@
 {
   "mongodb": {
-    "url": "mongodb://127.0.0.1:27017/BizCards"
+    "url": "mongodb://127.0.0.1:27017/BizCards",
+    "atlas": "mongodb+srv://<user_name>:<password>@restapiproject.eakxpxz.mongodb.net/BizCards"
   },
   "jwtSecret": "5YRcotw5B9AaxUTZpbULx3eJugLkhjvfxTPJRuNj6Zr",
   "tokenExpiresIn": "4h"
